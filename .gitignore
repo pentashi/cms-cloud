@@ -1,0 +1,11 @@
+# Node
+node_modules/
+dist/
+.env
+
+# Firebase
+firebase.ts
+cms-cloud-admin.json
+
+# Logs
+*.log
