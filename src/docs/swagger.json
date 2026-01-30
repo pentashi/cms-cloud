@@ -1,0 +1,121 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "CMS Cloud API",
+    "version": "1.0.0",
+    "description": "API documentation for CMS Cloud (Posts + Auth)"
+  },
+  "servers": [
+    { "url": "http://localhost:3000", "description": "Local server" }
+  ],
+  "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    },
+    "schemas": {
+      "Post": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string" },
+          "title": { "type": "string" },
+          "content": { "type": "string" },
+          "createdAt": { "type": "number" },
+          "updatedAt": { "type": "number" }
+        }
+      },
+      "CreatePost": {
+        "type": "object",
+        "required": ["title","content"],
+        "properties": {
+          "title": { "type": "string", "example": "My post title" },
+          "content": { "type": "string", "example": "Post body content" }
+        }
+      },
+      "UserSignup": {
+        "type": "object",
+        "required": ["email","password"],
+        "properties": {
+          "email": { "type": "string", "format": "email" },
+          "password": { "type": "string", "example": "Password123" }
+        }
+      },
+      "AuthResponse": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string" },
+          "email": { "type": "string" },
+          "token": { "type": "string" },
+          "createdAt": { "type": "number" }
+        }
+      }
+    }
+  },
+  "paths": {
+    "/posts": {
+      "get": {
+        "summary": "Fetch all posts",
+        "tags": ["Posts"],
+        "responses": {
+          "200": { "description": "List of posts", "content": { "application/json": { "schema": { "type": "array", "items": { "$ref": "#/components/schemas/Post" } } } } }
+        }
+      },
+      "post": {
+        "summary": "Create new post",
+        "tags": ["Posts"],
+        "security": [{ "bearerAuth": [] }],
+        "requestBody": {
+          "required": true,
+          "content": { "application/json": { "schema": { "$ref": "#/components/schemas/CreatePost" } } }
+        },
+        "responses": {
+          "201": { "description": "Created post", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Post" } } } },
+          "400": { "description": "Validation error" },
+          "401": { "description": "Unauthorized" }
+        }
+      }
+    },
+    "/posts/{id}": {
+      "get": {
+        "summary": "Fetch post by ID",
+        "tags": ["Posts"],
+        "parameters": [{ "name": "id", "in": "path", "required": true, "schema": { "type": "string" } }],
+        "responses": { "200": { "description": "Post", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Post" } } } }, "404": { "description": "Not found" } }
+      },
+      "put": {
+        "summary": "Update post",
+        "tags": ["Posts"],
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [{ "name": "id", "in": "path", "required": true, "schema": { "type": "string" } }],
+        "requestBody": { "required": true, "content": { "application/json": { "schema": { "$ref": "#/components/schemas/CreatePost" } } } },
+        "responses": { "200": { "description": "Updated post", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Post" } } } }, "400": { "description": "Validation error" }, "401": { "description": "Unauthorized" }, "404": { "description": "Not found" } }
+      },
+      "delete": {
+        "summary": "Delete post",
+        "tags": ["Posts"],
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [{ "name": "id", "in": "path", "required": true, "schema": { "type": "string" } }],
+        "responses": { "204": { "description": "No Content" }, "401": { "description": "Unauthorized" }, "404": { "description": "Not found" } }
+      }
+    },
+    "/signup": {
+      "post": {
+        "summary": "Create user account",
+        "tags": ["Auth"],
+        "requestBody": { "required": true, "content": { "application/json": { "schema": { "$ref": "#/components/schemas/UserSignup" } } } },
+        "responses": { "201": { "description": "Created", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/AuthResponse" } } } }, "409": { "description": "Conflict (email exists)" }, "400": { "description": "Validation error" } }
+      }
+    },
+    "/login": {
+      "post": {
+        "summary": "Login user",
+        "tags": ["Auth"],
+        "requestBody": { "required": true, "content": { "application/json": { "schema": { "$ref": "#/components/schemas/UserSignup" } } } },
+        "responses": { "200": { "description": "Auth response", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/AuthResponse" } } } }, "401": { "description": "Invalid credentials" } }
+      }
+    }
+  }
+}

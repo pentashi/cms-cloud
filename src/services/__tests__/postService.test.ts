@@ -15,7 +15,7 @@ jest.mock('firebase/database', () => ({
   remove: jest.fn(),
 }));
 
-const { get, set, push, update, remove } = require('firebase/database');
+const { get, \set, push, update, remove } = require('firebase/database');
 
 describe('PostService', () => {
   let postService: PostService;
