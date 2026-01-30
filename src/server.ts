@@ -1,3 +1,4 @@
+import 'dotenv/config'; // Load .env variables
 import express from 'express';
 import type { Request, Response } from 'express';
 import cors from 'cors';
@@ -21,5 +22,5 @@ app.get('/', (req: Request, res: Response) => {
 setupRoutes(app);
 
 // Start server
-const PORT = process.env.PORT || 3000;
+const PORT = parseInt(process.env.PORT || '3000', 10);
 app.listen(PORT, () => console.log(`Server running on http://localhost:${PORT}`));

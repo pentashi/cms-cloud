@@ -1,6 +1,7 @@
 import type { Router, Request, Response } from 'express';
 import { PostController } from '../controllers/postController.ts';
 import { validate } from '../middleware/validateRequest.ts';
+import { authenticate } from '../middleware/authenticate.ts';
 import { createPostSchema, updatePostSchema } from '../validators/postValidator.ts';
 
 const postController = new PostController();
@@ -29,8 +30,8 @@ export function setupPostsRoutes(router: Router) {
     }
   });
 
-  // Create new post
-  router.post('/posts', validate(createPostSchema), async (req: Request, res: Response) => {
+  // Create new post (requires authentication)
+  router.post('/posts', authenticate, validate(createPostSchema), async (req: Request, res: Response) => {
     try {
       const post = await postController.createPost(req.body);
       res.status(201).json(post);
@@ -39,8 +40,8 @@ export function setupPostsRoutes(router: Router) {
     }
   });
 
-  // Update post
-  router.put('/posts/:id', validate(updatePostSchema), async (req: Request, res: Response) => {
+  // Update post (requires authentication)
+  router.put('/posts/:id', authenticate, validate(updatePostSchema), async (req: Request, res: Response) => {
     try {
       const post = await postController.updatePost(req.params.id, req.body);
       res.json(post);
@@ -50,8 +51,8 @@ export function setupPostsRoutes(router: Router) {
     }
   });
 
-  // Delete post
-  router.delete('/posts/:id', async (req: Request, res: Response) => {
+  // Delete post (requires authentication)
+  router.delete('/posts/:id', authenticate, async (req: Request, res: Response) => {
     try {
       await postController.deletePost(req.params.id);
       res.status(204).send();
