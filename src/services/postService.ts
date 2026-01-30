@@ -1,6 +1,7 @@
 import { db } from '../firebase.ts';
 import { ref, set, push, get, remove, update } from 'firebase/database';
 import type { Post } from '../types/post.ts';
+import { NotFoundError, ValidationError } from '../utils/appError.ts';
 
 export class PostService {
   async getAllPosts(): Promise<Post[]> {
@@ -20,7 +21,7 @@ export class PostService {
 
   async createPost(data: Partial<Post>): Promise<Post> {
     if (!data.title || !data.content) {
-      throw new Error('Title and content are required');
+      throw new ValidationError('Title and content are required');
     }
 
     const newPostRef = push(ref(db, 'posts'));
@@ -40,11 +41,11 @@ export class PostService {
   async updatePost(id: string, data: Partial<Post>): Promise<Post> {
     const post = await this.getPostById(id);
     if (!post) {
-      throw new Error('Post not found');
+      throw new NotFoundError('Post');
     }
 
     if (!data.title || !data.content) {
-      throw new Error('Title and content are required');
+      throw new ValidationError('Title and content are required');
     }
 
     const updateData = {
@@ -60,7 +61,7 @@ export class PostService {
   async deletePost(id: string): Promise<void> {
     const post = await this.getPostById(id);
     if (!post) {
-      throw new Error('Post not found');
+      throw new NotFoundError('Post');
     }
     await remove(ref(db, `posts/${id}`));
   }

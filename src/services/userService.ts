@@ -4,6 +4,7 @@ import { db } from '../firebase.ts';
 import { ref, set, get, query, orderByChild, equalTo } from 'firebase/database';
 import type { User, AuthResponse } from '../types/user.ts';
 import type { SignupInput, LoginInput } from '../validators/authValidator.ts';
+import { ConflictError, UnauthorizedError } from '../utils/appError.ts';
 
 const JWT_SECRET = process.env.JWT_SECRET || 'your-secret-key-change-in-production';
 const JWT_EXPIRY = '7d';
@@ -13,7 +14,7 @@ export class UserService {
     // Check if user already exists
     const existingUser = await this.getUserByEmail(data.email);
     if (existingUser) {
-      throw new Error('Email already in use');
+      throw new ConflictError('Email already in use');
     }
 
     // Hash password
@@ -44,13 +45,13 @@ export class UserService {
     // Get user from Firebase
     const user = await this.getUserByEmail(data.email);
     if (!user) {
-      throw new Error('Invalid email or password');
+      throw new UnauthorizedError('Invalid email or password');
     }
 
     // Check password
     const passwordMatch = await bcrypt.compare(data.password, user.password || '');
     if (!passwordMatch) {
-      throw new Error('Invalid email or password');
+      throw new UnauthorizedError('Invalid email or password');
     }
 
     // Generate token

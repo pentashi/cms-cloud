@@ -5,6 +5,7 @@ import cors from 'cors';
 import helmet from 'helmet';
 import morgan from 'morgan';
 import { setupRoutes } from './routes/index.ts';
+import { errorHandler } from './middleware/errorHandler.ts';
 
 const app = express();
 
@@ -20,6 +21,9 @@ app.get('/', (req: Request, res: Response) => {
 
 // Setup all routes
 setupRoutes(app);
+
+// Error handling middleware (must be last)
+app.use(errorHandler);
 
 // Start server
 const PORT = parseInt(process.env.PORT || '3000', 10);
