@@ -85,3 +85,20 @@ Contributions, issues, and feature requests are welcome! Please open an issue or
 This project is licensed under the MIT License.
 
 ---
+ection-from-the-command-line#resolving-a-blocked-push
+remote:
+remote:
+remote:       —— Google Cloud Service Account Credentials —————————— 
+remote:        locations:
+remote:          - commit: abd2299884ad25a0899f99b3d54e84cc0ca41ffd  
+remote:            path: cms-cloud-admin.json.json:1
+remote:
+remote:        (?) To push, remove secret from commit(s) or follow th  his URL to allow the secret.
+remote:        https://github.com/pentashi/cms-cloud/security/secret-  -scanning/unblock-secret/38xU8cP7x17FuygmpGQwXbZixUU
+remote:
+remote:
+remote:
+To https://github.com/pentashi/cms-cloud.git
+ ! [remote rejected] main -> main (push declined due to repository rule violations)       
+error: failed to push some refs to 'https://github.com/pentashi/cms-cloud.git'
+PS C:\Users
