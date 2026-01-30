@@ -9,7 +9,7 @@ export const errorHandler = (err: any, req: Request, res: Response, next: NextFu
       statusCode: err.statusCode,
       message: err.message,
       ...(err instanceof Error && err.stack && process.env.NODE_ENV === 'development' && { stack: err.stack }),
-      ...(err.details && { details: err.details }),
+      ...(('details' in err && err.details) && { details: err.details }),
     });
   }
 

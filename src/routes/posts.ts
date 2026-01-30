@@ -16,7 +16,7 @@ export function setupPostsRoutes(router: Router) {
 
   // Fetch single post by ID
   router.get('/posts/:id', asyncHandler(async (req: Request, res: Response) => {
-    const post = await postController.getPostById(req.params.id);
+    const post = await postController.getPostById(req.params.id as string);
     if (!post) {
       return res.status(404).json({ error: 'Post not found' });
     }
@@ -31,13 +31,13 @@ export function setupPostsRoutes(router: Router) {
 
   // Update post (requires authentication)
   router.put('/posts/:id', authenticate, validate(updatePostSchema), asyncHandler(async (req: Request, res: Response) => {
-    const post = await postController.updatePost(req.params.id, req.body);
+    const post = await postController.updatePost(req.params.id as string, req.body);
     res.json(post);
   }));
 
   // Delete post (requires authentication)
   router.delete('/posts/:id', authenticate, asyncHandler(async (req: Request, res: Response) => {
-    await postController.deletePost(req.params.id);
+    await postController.deletePost(req.params.id as string);
     res.status(204).send();
   }));
 }
