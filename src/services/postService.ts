@@ -1,4 +1,4 @@
-import { db } from '../firebase';
+import { db } from '../firebase.js';
 import { ref, set, push, get, remove, update } from 'firebase/database';
 import type { Post } from '../types/post';
 import { NotFoundError, ValidationError } from '../utils/appError';

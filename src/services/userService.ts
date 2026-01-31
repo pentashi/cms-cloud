@@ -1,6 +1,6 @@
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
-import { db } from '../firebase';
+import { db } from '../firebase.js';
 import { ref, set, get, query, orderByChild, equalTo } from 'firebase/database';
 import type { User, AuthResponse } from '../types/user';
 import type { SignupInput, LoginInput } from '../validators/authValidator';
