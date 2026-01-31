@@ -18,4 +18,6 @@
     "esm": true,
     "experimentalEsm": true
   }
+  ,
+  "include": ["src"]
 }
