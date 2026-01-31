@@ -1,5 +1,5 @@
 import type { Request, Response, NextFunction } from 'express';
-import { AppError } from '../utils/appError.ts';
+import { AppError } from '../utils/appError.js';
 
 export const errorHandler = (err: any, req: Request, res: Response, next: NextFunction) => {
   // Handle AppError instances
@@ -9,7 +9,7 @@ export const errorHandler = (err: any, req: Request, res: Response, next: NextFu
       statusCode: err.statusCode,
       message: err.message,
       ...(err instanceof Error && err.stack && process.env.NODE_ENV === 'development' && { stack: err.stack }),
-      ...(('details' in err && err.details) && { details: err.details }),
+      ...(err && 'details' in err && typeof (err as any).details === 'object' ? { details: (err as any).details } : {}),
     });
   }
 
@@ -19,7 +19,7 @@ export const errorHandler = (err: any, req: Request, res: Response, next: NextFu
       status: 'error',
       statusCode: 400,
       message: 'Validation failed',
-      details: err.errors,
+      details: err.issues,
     });
   }
 

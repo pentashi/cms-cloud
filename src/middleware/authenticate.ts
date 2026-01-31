@@ -1,5 +1,5 @@
 import type { Request, Response, NextFunction } from 'express';
-import { UserService } from '../services/userService.ts';
+import { UserService } from '../services/userService.js';
 
 const userService = new UserService();
 

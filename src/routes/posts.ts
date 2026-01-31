@@ -1,9 +1,9 @@
 import type { Router, Request, Response, NextFunction } from 'express';
-import { PostController } from '../controllers/postController.ts';
-import { validate } from '../middleware/validateRequest.ts';
-import { authenticate } from '../middleware/authenticate.ts';
-import { asyncHandler } from '../middleware/errorHandler.ts';
-import { createPostSchema, updatePostSchema } from '../validators/postValidator.ts';
+import { PostController } from '../controllers/postController.js';
+import { validate } from '../middleware/validateRequest.js';
+import { authenticate } from '../middleware/authenticate.js';
+import { asyncHandler } from '../middleware/errorHandler.js';
+import { createPostSchema, updatePostSchema } from '../validators/postValidator.js';
 
 const postController = new PostController();
 

@@ -1,8 +1,8 @@
 import type { Router, Request, Response } from 'express';
-import { UserController } from '../controllers/userController.ts';
-import { validate } from '../middleware/validateRequest.ts';
-import { asyncHandler } from '../middleware/errorHandler.ts';
-import { signupSchema, loginSchema } from '../validators/authValidator.ts';
+import { UserController } from '../controllers/userController.js';
+import { validate } from '../middleware/validateRequest.js';
+import { asyncHandler } from '../middleware/errorHandler.js';
+import { signupSchema, loginSchema } from '../validators/authValidator.js';
 
 const userController = new UserController();
 

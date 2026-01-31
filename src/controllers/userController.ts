@@ -1,5 +1,5 @@
-import type { SignupInput, LoginInput } from '../validators/authValidator.ts';
-import { UserService } from '../services/userService.ts';
+import type { SignupInput, LoginInput } from '../validators/authValidator.js';
+import { UserService } from '../services/userService.js';
 
 const userService = new UserService();
 

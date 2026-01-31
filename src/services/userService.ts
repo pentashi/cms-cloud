@@ -1,10 +1,10 @@
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
-import { db } from '../firebase.ts';
+import { db } from '../firebase.js';
 import { ref, set, get, query, orderByChild, equalTo } from 'firebase/database';
-import type { User, AuthResponse } from '../types/user.ts';
-import type { SignupInput, LoginInput } from '../validators/authValidator.ts';
-import { ConflictError, UnauthorizedError } from '../utils/appError.ts';
+import type { User, AuthResponse } from '../types/user.js';
+import type { SignupInput, LoginInput } from '../validators/authValidator.js';
+import { ConflictError, UnauthorizedError } from '../utils/appError.js';
 
 const JWT_SECRET = process.env.JWT_SECRET || 'your-secret-key-change-in-production';
 const JWT_EXPIRY = '7d';

@@ -1,6 +1,6 @@
 import { ref, set, push, get } from 'firebase/database';
-import type { Post } from '../types/post.ts';
-import { PostService } from '../services/postService.ts';
+import type { Post } from '../types/post.js';
+import { PostService } from '../services/postService.js';
 
 const postService = new PostService();
 

@@ -1,7 +1,7 @@
-import { db } from '../firebase.ts';
+import { db } from '../firebase.js';
 import { ref, set, push, get, remove, update } from 'firebase/database';
-import type { Post } from '../types/post.ts';
-import { NotFoundError, ValidationError } from '../utils/appError.ts';
+import type { Post } from '../types/post.js';
+import { NotFoundError, ValidationError } from '../utils/appError.js';
 
 export class PostService {
   async getAllPosts(): Promise<Post[]> {

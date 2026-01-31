@@ -8,8 +8,8 @@ import swaggerUi from 'swagger-ui-express';
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
-import { setupRoutes } from './routes/index.ts';
-import { errorHandler } from './middleware/errorHandler.ts';
+import { setupRoutes } from './routes/index.js';
+import { errorHandler } from './middleware/errorHandler.js';
 
 const app = express();
 
