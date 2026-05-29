@@ -152,7 +152,7 @@ TOKEN="<jwt from login>"
 
 curl -X POST http://localhost:3000/posts \
   -H "Content-Type: application/json" \
-  -H "Authorization: ******" \
+  -H "Authorization: Bearer $TOKEN" \
   -d '{"title": "Hello World", "content": "First post."}'
 ```
 
@@ -173,7 +173,7 @@ curl http://localhost:3000/posts
 ```bash
 curl -X PUT http://localhost:3000/posts/abc123 \
   -H "Content-Type: application/json" \
-  -H "Authorization: ******" \
+  -H "Authorization: Bearer $TOKEN" \
   -d '{"title": "Updated Title"}'
 ```
 
@@ -181,7 +181,7 @@ curl -X PUT http://localhost:3000/posts/abc123 \
 
 ```bash
 curl -X DELETE http://localhost:3000/posts/abc123 \
-  -H "Authorization: ******"
+  -H "Authorization: Bearer $TOKEN"
 ```
 
 ---
@@ -196,9 +196,9 @@ Full interactive documentation is available at `GET /docs` (Swagger UI).
 | `POST` | `/auth/login` | — | Authenticate and receive a JWT |
 | `GET` | `/posts` | — | List all posts |
 | `GET` | `/posts/:id` | — | Get a single post by ID |
-| `POST` | `/posts` | ****** | Create a new post |
-| `PUT` | `/posts/:id` | ****** | Update an existing post |
-| `DELETE` | `/posts/:id` | ****** | Delete a post |
+| `POST` | `/posts` | JWT required | Create a new post |
+| `PUT` | `/posts/:id` | JWT required | Update an existing post |
+| `DELETE` | `/posts/:id` | JWT required | Delete a post |
 | `GET` | `/` | — | Health check — returns `{ status, timestamp }` |
 
 All error responses follow the shape:
